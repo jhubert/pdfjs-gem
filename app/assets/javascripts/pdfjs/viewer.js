@@ -22,25 +22,25 @@
 
 /******/ // The require scope
 /******/ var __webpack_require__ = {};
-/******/ 
+/******/
 /************************************************************************/
 /******/ /* webpack/runtime/define property getters */
 /******/ (() => {
-/******/ 	// define getter functions for harmony exports
-/******/ 	__webpack_require__.d = (exports, definition) => {
-/******/ 		for(var key in definition) {
-/******/ 			if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 				Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 			}
-/******/ 		}
-/******/ 	};
+/******/  // define getter functions for harmony exports
+/******/  __webpack_require__.d = (exports, definition) => {
+/******/    for(var key in definition) {
+/******/      if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/        Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/      }
+/******/    }
+/******/  };
 /******/ })();
-/******/ 
+/******/
 /******/ /* webpack/runtime/hasOwnProperty shorthand */
 /******/ (() => {
-/******/ 	__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/  __webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ })();
-/******/ 
+/******/
 /************************************************************************/
 var __webpack_exports__ = {};
 
@@ -827,11 +827,16 @@ const defaultOptions = {
     kind: OptionKind.WORKER
   },
   workerSrc: {
-    value: "../build/pdf.worker.mjs",
+    value: "/assets/pdfjs/pdf.worker.js",
     kind: OptionKind.WORKER
   }
 };
 {
+  const pdfWorkerMeta = document.querySelector('meta[name="pdf-worker-url"]');
+  if (pdfWorkerMeta) {
+    defaultOptions.workerSrc.value = pdfWorkerMeta.content;
+  }
+
   defaultOptions.defaultUrl = {
     value: "compressed.tracemonkey-pldi-09.pdf",
     kind: OptionKind.VIEWER
@@ -15311,6 +15316,12 @@ function webViewerLoad() {
     console.error(`webviewerloaded: ${ex}`);
     document.dispatchEvent(event);
   }
+
+  const pdfWorkerMeta = document.querySelector('meta[name="pdf-worker-url"]');
+  if (pdfWorkerMeta) {
+    GlobalWorkerOptions.workerSrc = pdfWorkerMeta.content;
+  }
+
   PDFViewerApplication.run(config);
 }
 document.blockUnblockOnload?.(true);
@@ -15325,4 +15336,4 @@ var __webpack_exports__PDFViewerApplicationConstants = __webpack_exports__.PDFVi
 var __webpack_exports__PDFViewerApplicationOptions = __webpack_exports__.PDFViewerApplicationOptions;
 export { __webpack_exports__PDFViewerApplication as PDFViewerApplication, __webpack_exports__PDFViewerApplicationConstants as PDFViewerApplicationConstants, __webpack_exports__PDFViewerApplicationOptions as PDFViewerApplicationOptions };
 
-//# sourceMappingURL=viewer.mjs.map
+//# sourceMappingURL=viewer.js.map
